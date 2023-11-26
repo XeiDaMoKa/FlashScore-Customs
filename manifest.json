@@ -29,12 +29,13 @@
   "content_scripts": [
     {
       "matches": ["https://www.flashscore.com/*"],
-      "js": ["jquery.js", "content.js"]
+      "js": ["jquery.js", "content.js"],
+      "css": ["content.css"]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["jquery.js", "comfortaa.ttf", "content.css", "popup.css"],
+      "resources": ["comfortaa.ttf", "popup.css"],
       "matches": ["https://www.flashscore.com/*"]
     }
   ]

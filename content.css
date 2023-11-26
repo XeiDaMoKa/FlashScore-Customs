@@ -1,0 +1,12 @@
+/* styles.css */
+body[fontstate="comfortaa"] {
+    font-family: 'Comfortaa, sans-serif';
+    font-size: calc(1em - 3px);
+  }
+
+  .event__header[visibilitystate="hidden"] {
+    display: none;
+  }
+  .adsenvelope   {
+    display: none !important;
+}

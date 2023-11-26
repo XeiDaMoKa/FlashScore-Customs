@@ -3,29 +3,105 @@
 // Function to apply or remove the Comfortaa font and adjust font size based on the fontState
 function applyFont(fontState) {
   if (fontState === 'comfortaa') {
-    // Apply Comfortaa font to the content and reduce font size by 10px
-    $('body').css({
-      'font-family': 'Comfortaa, sans-serif',
-      'font-size': 'calc(1em - 3px)', // Reduce font size by 10px
-    });
+    // Apply Comfortaa font by adding a class to the body
+    $('body').attr('fontstate', 'comfortaa');
   } else {
-    // Remove Comfortaa font from the content and reset font size to default
-    $('body').css({
-      'font-family': '',
-      'font-size': '' // Reset to the default font size
-    });
+    // Remove Comfortaa font by removing the class from the body
+    $('body').removeAttr('fontstate');
   }
 }
 
 // Function to toggle the visibility of the .event__header element
 function toggleVisibility(visibilityState) {
   if (visibilityState === 'hidden') {
-    // Hide the .event__header element
-    $('.event__header').hide();
+    // Hide the .event__header element by adding a class
+    $('.event__header').attr('visibilitystate', 'hidden');
   } else {
-    // Show the .event__header element
-    $('.event__header').show();
+    // Show the .event__header element by removing the class
+    $('.event__header').removeAttr('visibilitystate');
   }
+}
+
+// Function to add missing team logos and apply fontExtraBold to the winner
+function addMissingTeamLogos() {
+  const teamLogos = {
+    'FaZe Clan': 'https://static.flashscore.com/res/image/data/l6Qwkdg5-f3O0t2tT.png',
+    'Ninjas in Pyjamas': 'https://static.flashscore.com/res/image/data/j18BuEzB-KSE0hUJa.png',
+    '9INE': 'https://static.flashscore.com/res/image/data/0tqgDhBr-C2aQ6Xo0.png',
+    'Team Spirit': 'https://static.flashscore.com/res/image/data/QcXfQGf5-0Swx7XSF.png',
+    'EDward Gaming': 'https://static.flashscore.com/res/image/data/xtnvwhh5-rgb1I9qH.png',
+    'Oh My God': 'https://static.flashscore.com/res/image/data/pQSFfUXg-pGatLcF5.png',
+    'LGD Gaming': 'https://static.flashscore.com/res/image/data/K2DzGSil-thpb3ffm.png',
+    'LNG Esports': 'https://static.flashscore.com/res/image/data/Y9vJAmyB-Mqc5HTbN.png',
+    'TT Gaming': 'https://static.flashscore.com/res/image/data/C0zbdICr-hnEFSiGQ.png',
+    'JD Gaming': 'https://static.flashscore.com/res/image/data/4Aoo4weM-MLEBzXUg.png',
+    'Bilibili Gaming': 'https://static.flashscore.com/res/image/data/8GDKDOdM-MLEBzXUg.png',
+    'Weibo Gaming': 'https://static.flashscore.com/res/image/data/by1SS8h5-h0gdtMbg.png',
+    "Anyone's Legend": 'https://static.flashscore.com/res/image/data/bZJer3Ar-h0gdtMbg.png',
+    'Royal Never Give Up': 'https://static.flashscore.com/res/image/data/63vGigCr-Mqc5HTbN.png',
+    'Rare Atom': 'https://static.flashscore.com/res/image/data/pY6VtOf5-hnEFSiGQ.png',
+    'FunPlus Phoenix': 'https://static.flashscore.com/res/image/data/EXMI6FBr-2giVGljt.png',
+    'Team WE': 'https://static.flashscore.com/res/image/data/rFWqQsgl-Mqc5HTbN.png',
+    'TyLoo': 'https://static.flashscore.com/res/image/data/fJuOzPzB-OW1GzM1o.png',
+    'Eternal Fire': 'https://static.flashscore.com/res/image/data/86rJaDxS-CIXl7tXD.png',
+    'Sinners': 'https://static.flashscore.com/res/image/data/2TVLVEwS-Y1Bn3F8b.png',
+    'Unity Esports': 'https://static.flashscore.com/res/image/data/Y1wFWPg5-OOLMfIbn.png',
+    'Sampi': 'https://static.flashscore.com/res/image/data/ADZvAOzS-hYvt5nkJ.png',
+    'ECLOT': 'https://static.flashscore.com/res/image/data/pIMVEPh5-C6sOg8zO.png',
+    'Team Vitality': 'https://static.flashscore.com/res/image/data/C8zF3GEG-xp5fvF49.png',
+    'Cloud9': 'https://static.flashscore.com/res/image/data/YyqvtcZg-QgiwK8ud.png',
+    'compLexity Gaming': 'https://static.flashscore.com/res/image/data/GEFoqmwS-f3O0t2tT.png',
+    'Monte': 'https://static.flashscore.com/res/image/data/OnGeejFG-8znQxvFT.png',
+    'Virtus.pro': 'https://static.flashscore.com/res/image/data/0rxGJKxS-0E6BYcd0.png',
+    'MIBR': 'https://static.flashscore.com/res/image/data/YZpD0GWg-zy5VjKZP.png',
+    'Ultra Prime': 'https://static.flashscore.com/res/image/data/jF3mIBZA-dKCahVoJ.png'
+  };
+
+  $('.event__match--live, .event__match--finished').each(function() {
+    const homeScore = parseInt($(this).find('.event__score--home').text());
+    const awayScore = parseInt($(this).find('.event__score--away').text());
+
+    if (!isNaN(homeScore) && !isNaN(awayScore)) {
+      const fontExtraBoldClass = 'fontExtraBold';
+      const homeParticipant = $(this).find('.event__participant--home');
+      const awayParticipant = $(this).find('.event__participant--away');
+
+      // Remove fontExtraBold class from both participants
+      homeParticipant.removeClass(fontExtraBoldClass);
+      awayParticipant.removeClass(fontExtraBoldClass);
+
+      // Check for winner or tie
+      if (homeScore > awayScore) {
+        homeParticipant.addClass(fontExtraBoldClass);
+      } else if (homeScore < awayScore) {
+        awayParticipant.addClass(fontExtraBoldClass);
+      } else {
+        // It's a tie, add fontExtraBold to both participants
+        homeParticipant.addClass(fontExtraBoldClass);
+        awayParticipant.addClass(fontExtraBoldClass);
+      }
+    }
+  });
+
+  // Rest of the code for adding missing logos
+  $('.event__participant').each(function() {
+    const teamName = $(this).text().trim();
+
+    if (teamLogos.hasOwnProperty(teamName)) {
+      // Check if the team name is in the logo mapping
+      if ($(this).prev('.event__logo').length === 0) {
+        // Check if the team doesn't have a logo already
+        const logoUrl = teamLogos[teamName];
+        const logoImg = $('<img>').addClass('event__logo').attr('loading', 'lazy').attr('src', logoUrl);
+        if ($(this).hasClass('event__participant--away')) {
+          logoImg.css('grid-area', 'awayLogo'); // Add grid area for away logos
+        } else {
+          logoImg.css('grid-area', 'homeLogo'); // Add grid area for home logos
+        }
+        $(this).before(logoImg);
+      }
+    }
+  });
 }
 
 // Observer configuration
@@ -45,6 +121,9 @@ const observerCallback = function(mutationsList, observer) {
 
         applyFont(fontState);
         toggleVisibility(visibilityState);
+
+        // Check for teams without logo flags and add them dynamically
+        addMissingTeamLogos();
       });
     }
   }
@@ -63,6 +142,9 @@ chrome.storage.sync.get(['fontState', 'visibilityState'], function (data) {
 
   applyFont(fontState);
   toggleVisibility(visibilityState);
+
+  // Check for teams without logo flags and add them dynamically
+  addMissingTeamLogos();
 });
 
 // Listen for messages from the popup
