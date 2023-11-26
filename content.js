@@ -17,6 +17,17 @@ function applyFont(fontState) {
   }
 }
 
+// Function to toggle the visibility of the .event__header element
+function toggleVisibility(visibilityState) {
+  if (visibilityState === 'hidden') {
+    // Hide the .event__header element
+    $('.event__header').hide();
+  } else {
+    // Show the .event__header element
+    $('.event__header').show();
+  }
+}
+
 // Observer configuration
 const observerConfig = {
   childList: true, // observe direct children of the target
@@ -27,10 +38,13 @@ const observerConfig = {
 const observerCallback = function(mutationsList, observer) {
   for (const mutation of mutationsList) {
     if (mutation.type === 'childList' || mutation.type === 'subtree') {
-      // Apply the font whenever the DOM structure changes
-      chrome.storage.sync.get('fontState', function (data) {
+      // Apply the font and toggle visibility whenever the DOM structure changes
+      chrome.storage.sync.get(['fontState', 'visibilityState'], function (data) {
         var fontState = data.fontState || 'default';
+        var visibilityState = data.visibilityState || 'visible';
+
         applyFont(fontState);
+        toggleVisibility(visibilityState);
       });
     }
   }
@@ -42,10 +56,13 @@ const observer = new MutationObserver(observerCallback);
 // Start observing the target node for configured mutations
 observer.observe(document.body, observerConfig);
 
-// Check the font state on page load and apply the font
-chrome.storage.sync.get('fontState', function (data) {
+// Check the font and visibility state on page load and apply accordingly
+chrome.storage.sync.get(['fontState', 'visibilityState'], function (data) {
   var fontState = data.fontState || 'default';
+  var visibilityState = data.visibilityState || 'visible';
+
   applyFont(fontState);
+  toggleVisibility(visibilityState);
 });
 
 // Listen for messages from the popup
@@ -55,6 +72,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     applyFont(request.fontState);
 
     // Send a response to acknowledge that the font has been toggled
+    sendResponse({ success: true });
+  } else if (request.action === 'toggleVisibility') {
+    // Toggle the visibility of the .event__header element
+    toggleVisibility(request.visibilityState);
+
+    // Send a response to acknowledge that the visibility has been toggled
     sendResponse({ success: true });
   }
 });

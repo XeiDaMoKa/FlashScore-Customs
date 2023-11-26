@@ -1,12 +1,16 @@
 // popup.js
 
 $(document).ready(function () {
-  // Load the current state from storage
-  chrome.storage.sync.get('fontState', function (data) {
+  // Load the current state from storage for font and visibility
+  chrome.storage.sync.get(['fontState', 'visibilityState'], function (data) {
     var fontState = data.fontState || 'default';
+    var visibilityState = data.visibilityState || 'visible';
 
     // Set the initial state of the font toggle button
     updateFontButtonState(fontState);
+
+    // Set the initial state of the visibility toggle button
+    updateVisibilityButtonState(visibilityState);
 
     // Add click event listener to the font toggle button
     $('#toggleFontButton').click(function () {
@@ -24,14 +28,6 @@ $(document).ready(function () {
         });
       });
     });
-  });
-
-  // Load the current state from storage
-  chrome.storage.sync.get('visibilityState', function (data) {
-    var visibilityState = data.visibilityState || 'visible';
-
-    // Set the initial state of the visibility toggle button
-    updateVisibilityButtonState(visibilityState);
 
     // Add click event listener to the visibility toggle button
     $('#toggleVisibilityButton').click(function () {
@@ -59,6 +55,7 @@ $(document).ready(function () {
 
   function updateVisibilityButtonState(visibilityState) {
     // Update the visibility toggle button text based on the visibility state
-    $('#toggleVisibilityButton').text((visibilityState === 'visible') ? 'Hide Element' : 'Show Element');
+    $('#toggleVisibilityButton').text((visibilityState === 'visible') ? 'Hide Headers' : 'Show Headers');
+    $('#toggleVisibilityButton').toggleClass('comfortaa-visibility', visibilityState === 'hidden');
   }
 });
