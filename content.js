@@ -67,21 +67,27 @@ function addMissingTeamLogos() {
     const awayParticipant = $(this).find('.event__participant--away');
 
     // Remove fontExtraBold class from both participants
-    homeParticipant.removeClass(fontExtraBoldClass).css('color', ''); // Reset color
-    awayParticipant.removeClass(fontExtraBoldClass).css('color', ''); // Reset color
+    homeParticipant.removeClass(fontExtraBoldClass); // Reset color
+    awayParticipant.removeClass(fontExtraBoldClass); // Reset color
 
     // Check for winner or tie
     if (homeScore > awayScore) {
-      homeParticipant.addClass(fontExtraBoldClass).css('color', 'green');
+      homeParticipant.addClass(fontExtraBoldClass);
     } else if (homeScore < awayScore) {
-      awayParticipant.addClass(fontExtraBoldClass).css('color', 'green');
+      awayParticipant.addClass(fontExtraBoldClass);
     } else {
       // It's a tie, add fontExtraBold to both participants
-      homeParticipant.addClass(fontExtraBoldClass).css('color', 'green');
-      awayParticipant.addClass(fontExtraBoldClass).css('color', 'green');
+      homeParticipant.addClass(fontExtraBoldClass);
+      awayParticipant.addClass(fontExtraBoldClass);
     }
   }
 });
+
+  // Prevent clicks on logo flags
+  $('.event__match:not(.event__match--scheduled) .event__logo').off('click').on('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  });
 
   // Rest of the code for adding missing logos
   $('.event__participant').each(function() {
