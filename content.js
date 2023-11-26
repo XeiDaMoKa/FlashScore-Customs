@@ -57,7 +57,7 @@ function addMissingTeamLogos() {
     'Ultra Prime': 'https://static.flashscore.com/res/image/data/jF3mIBZA-dKCahVoJ.png'
   };
 
-$('.event__match--live, .event__match--finished').each(function() {
+$('.event__match--live').each(function() {
   const homeScore = parseInt($(this).find('.event__score--home').text());
   const awayScore = parseInt($(this).find('.event__score--away').text());
 
