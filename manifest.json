@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "FlashScore Customs",
+  "version": "0.1",
+  "description": "Tracks who's winning on FlashScore.com",
+  "author": "XeiDaMoKa",
+  "icons": {
+    "16": "icons/flashscoreicon.png",
+    "32": "icons/flashscoreicon32x32.png",
+    "48": "icons/flashscoreicon48x48.png",
+    "128": "icons/flashscoreicon128x128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/flashscoreicon.png",
+      "32": "icons/flashscoreicon32x32.png",
+      "48": "icons/flashscoreicon48x48.png",
+      "128": "icons/flashscoreicon128x128.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://www.flashscore.com/"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.flashscore.com/*"],
+      "js": ["jquery.js", "content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["jquery.js", "comfortaa.ttf", "content.css", "popup.css"],
+      "matches": ["https://www.flashscore.com/*"]
+    }
+  ]
+}
