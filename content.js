@@ -57,31 +57,31 @@ function addMissingTeamLogos() {
     'Ultra Prime': 'https://static.flashscore.com/res/image/data/jF3mIBZA-dKCahVoJ.png'
   };
 
-  $('.event__match--live, .event__match--finished').each(function() {
-    const homeScore = parseInt($(this).find('.event__score--home').text());
-    const awayScore = parseInt($(this).find('.event__score--away').text());
+$('.event__match--live, .event__match--finished').each(function() {
+  const homeScore = parseInt($(this).find('.event__score--home').text());
+  const awayScore = parseInt($(this).find('.event__score--away').text());
 
-    if (!isNaN(homeScore) && !isNaN(awayScore)) {
-      const fontExtraBoldClass = 'fontExtraBold';
-      const homeParticipant = $(this).find('.event__participant--home');
-      const awayParticipant = $(this).find('.event__participant--away');
+  if (!isNaN(homeScore) && !isNaN(awayScore)) {
+    const fontExtraBoldClass = 'fontExtraBold';
+    const homeParticipant = $(this).find('.event__participant--home');
+    const awayParticipant = $(this).find('.event__participant--away');
 
-      // Remove fontExtraBold class from both participants
-      homeParticipant.removeClass(fontExtraBoldClass);
-      awayParticipant.removeClass(fontExtraBoldClass);
+    // Remove fontExtraBold class from both participants
+    homeParticipant.removeClass(fontExtraBoldClass).css('color', ''); // Reset color
+    awayParticipant.removeClass(fontExtraBoldClass).css('color', ''); // Reset color
 
-      // Check for winner or tie
-      if (homeScore > awayScore) {
-        homeParticipant.addClass(fontExtraBoldClass);
-      } else if (homeScore < awayScore) {
-        awayParticipant.addClass(fontExtraBoldClass);
-      } else {
-        // It's a tie, add fontExtraBold to both participants
-        homeParticipant.addClass(fontExtraBoldClass);
-        awayParticipant.addClass(fontExtraBoldClass);
-      }
+    // Check for winner or tie
+    if (homeScore > awayScore) {
+      homeParticipant.addClass(fontExtraBoldClass).css('color', 'green');
+    } else if (homeScore < awayScore) {
+      awayParticipant.addClass(fontExtraBoldClass).css('color', 'green');
+    } else {
+      // It's a tie, add fontExtraBold to both participants
+      homeParticipant.addClass(fontExtraBoldClass).css('color', 'green');
+      awayParticipant.addClass(fontExtraBoldClass).css('color', 'green');
     }
-  });
+  }
+});
 
   // Rest of the code for adding missing logos
   $('.event__participant').each(function() {
