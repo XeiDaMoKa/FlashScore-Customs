@@ -58,36 +58,80 @@ function addMissingTeamLogos() {
   };
 
   $('.event__match:not(.event__match--scheduled)').each(function() {
-  const homeScore = parseInt($(this).find('.event__score--home').text());
-  const awayScore = parseInt($(this).find('.event__score--away').text());
+    const homeScore = parseInt($(this).find('.event__score--home').text());
+    const awayScore = parseInt($(this).find('.event__score--away').text());
 
-  if (!isNaN(homeScore) && !isNaN(awayScore)) {
-    const fontExtraBoldClass = 'fontExtraBold';
-    const homeParticipant = $(this).find('.event__participant--home');
-    const awayParticipant = $(this).find('.event__participant--away');
+    if (!isNaN(homeScore) && !isNaN(awayScore)) {
+      const fontExtraBoldClass = 'fontExtraBold';
+      const homeParticipant = $(this).find('.event__participant--home');
+      const awayParticipant = $(this).find('.event__participant--away');
 
-    // Remove fontExtraBold class from both participants
-    homeParticipant.removeClass(fontExtraBoldClass); // Reset color
-    awayParticipant.removeClass(fontExtraBoldClass); // Reset color
+      // Remove fontExtraBold class from both participants
+      homeParticipant.removeClass(fontExtraBoldClass); // Reset color
+      awayParticipant.removeClass(fontExtraBoldClass); // Reset color
 
-    // Check for winner or tie
-    if (homeScore > awayScore) {
-      homeParticipant.addClass(fontExtraBoldClass);
-    } else if (homeScore < awayScore) {
-      awayParticipant.addClass(fontExtraBoldClass);
+      // Check for winner or tie
+      if (homeScore > awayScore) {
+        homeParticipant.addClass(fontExtraBoldClass);
+      } else if (homeScore < awayScore) {
+        awayParticipant.addClass(fontExtraBoldClass);
+      } else {
+        // It's a tie, add fontExtraBold to both participants
+        homeParticipant.addClass(fontExtraBoldClass);
+        awayParticipant.addClass(fontExtraBoldClass);
+      }
+    }
+  });
+
+// Prevent clicks on logo flags
+let lastClickedLogo = null;
+let clickCount = 0;
+
+$('.event__match .event__logo').on('click', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  const clickedLogo = $(this);
+  const matchElement = clickedLogo.closest('.event__match');
+  const homeParticipant = matchElement.find('.event__participant--home');
+  const awayParticipant = matchElement.find('.event__participant--away');
+
+  if (lastClickedLogo === null || lastClickedLogo.get(0) !== clickedLogo.get(0)) {
+    // First click or click on the other flag
+    clickCount = 1;
+    lastClickedLogo = clickedLogo;
+
+    if (clickedLogo.hasClass('event__logo--home')) {
+      homeParticipant.css('color', 'green');
+      awayParticipant.css('color', 'red');
+    } else if (clickedLogo.hasClass('event__logo--away')) {
+      homeParticipant.css('color', 'red');
+      awayParticipant.css('color', 'green');
+    }
+  } else {
+    // Second click on the same flag
+    clickCount++;
+
+    if (clickCount % 2 === 0) {
+      // Even click count, turn both yellow
+      homeParticipant.css('color', 'yellow');
+      awayParticipant.css('color', 'yellow');
     } else {
-      // It's a tie, add fontExtraBold to both participants
-      homeParticipant.addClass(fontExtraBoldClass);
-      awayParticipant.addClass(fontExtraBoldClass);
+      // Odd click count, toggle colors
+      if (clickedLogo.hasClass('event__logo--home')) {
+        homeParticipant.css('color', 'green');
+        awayParticipant.css('color', 'red');
+      } else if (clickedLogo.hasClass('event__logo--away')) {
+        homeParticipant.css('color', 'red');
+        awayParticipant.css('color', 'green');
+      }
     }
   }
 });
 
-  // Prevent clicks on logo flags
-  $('.event__match:not(.event__match--scheduled) .event__logo').off('click').on('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  });
+
+
+
 
   // Rest of the code for adding missing logos
   $('.event__participant').each(function() {
