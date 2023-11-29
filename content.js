@@ -115,13 +115,21 @@ $('.event__match .event__logo').on('click', function(e) {
       homeParticipant.css('color', 'green');
       awayParticipant.css('color', 'red');
       if (!isScheduled) {
-        starIcon.css('fill', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow')).css('stroke', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'));
+        starIcon
+        .css('fill', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'))
+        .css('stroke', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'))
+        .css('--color-symbol-star-fill', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'))
+        .css('--color-symbol-star-outline', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'));
       }
     } else if (clickedLogo.hasClass('event__logo--away')) {
       homeParticipant.css('color', 'red');
       awayParticipant.css('color', 'green');
       if (!isScheduled) {
-        starIcon.css('fill', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow')).css('stroke', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'));
+        starIcon
+        .css('fill', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'))
+        .css('stroke', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'))
+        .css('--color-symbol-star-fill', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'))
+        .css('--color-symbol-star-outline', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'));
       }
     }
   } else {
@@ -133,7 +141,11 @@ $('.event__match .event__logo').on('click', function(e) {
       homeParticipant.css('color', 'yellow');
       awayParticipant.css('color', 'yellow');
       if (!isScheduled) {
-        starIcon.css('fill', (isHomeWinner && isAwayWinner) ? 'green' : 'red').css('stroke', (isHomeWinner && isAwayWinner) ? 'green' : 'red');
+        starIcon
+        .css('fill', (isHomeWinner && isAwayWinner) ? 'green' : 'red')
+        .css('stroke', (isHomeWinner && isAwayWinner) ? 'green' : 'red')
+        .css('--color-symbol-star-fill', (isHomeWinner && isAwayWinner) ? 'green' : 'red')
+        .css('--color-symbol-star-outline', (isHomeWinner && isAwayWinner) ? 'green' : 'red');
       }
     } else {
       // Odd click count, toggle colors
@@ -141,13 +153,21 @@ $('.event__match .event__logo').on('click', function(e) {
         homeParticipant.css('color', 'green');
         awayParticipant.css('color', 'red');
         if (!isScheduled) {
-          starIcon.css('fill', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow')).css('stroke', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'));
+          starIcon
+          .css('fill', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'))
+          .css('stroke', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'))
+          .css('--color-symbol-star-fill', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'))
+          .css('--color-symbol-star-outline', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'));
         }
       } else if (clickedLogo.hasClass('event__logo--away')) {
         homeParticipant.css('color', 'red');
         awayParticipant.css('color', 'green');
         if (!isScheduled) {
-          starIcon.css('fill', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow')).css('stroke', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'));
+          starIcon
+          .css('fill', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'))
+          .css('stroke', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'))
+          .css('--color-symbol-star-fill', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'))
+          .css('--color-symbol-star-outline', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'));
         }
       }
     }
