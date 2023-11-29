@@ -87,6 +87,7 @@ function addMissingTeamLogos() {
 let lastClickedLogo = null;
 let clickCount = 0;
 
+// Inside the click event handler for logo flags
 $('.event__match .event__logo').on('click', function(e) {
   e.preventDefault();
   e.stopPropagation();
@@ -95,7 +96,16 @@ $('.event__match .event__logo').on('click', function(e) {
   const matchElement = clickedLogo.closest('.event__match');
   const homeParticipant = matchElement.find('.event__participant--home');
   const awayParticipant = matchElement.find('.event__participant--away');
+  const starIcon = matchElement.find('.star-ico');
 
+  const fontExtraBoldClass = 'fontExtraBold';
+  const isHomeWinner = homeParticipant.hasClass(fontExtraBoldClass);
+  const isAwayWinner = awayParticipant.hasClass(fontExtraBoldClass);
+
+  // Check if the match is scheduled
+  const isScheduled = matchElement.hasClass('event__match--scheduled');
+
+  // Bet is allowed on all matches
   if (lastClickedLogo === null || lastClickedLogo.get(0) !== clickedLogo.get(0)) {
     // First click or click on the other flag
     clickCount = 1;
@@ -104,9 +114,15 @@ $('.event__match .event__logo').on('click', function(e) {
     if (clickedLogo.hasClass('event__logo--home')) {
       homeParticipant.css('color', 'green');
       awayParticipant.css('color', 'red');
+      if (!isScheduled) {
+        starIcon.css('fill', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow')).css('stroke', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'));
+      }
     } else if (clickedLogo.hasClass('event__logo--away')) {
       homeParticipant.css('color', 'red');
       awayParticipant.css('color', 'green');
+      if (!isScheduled) {
+        starIcon.css('fill', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow')).css('stroke', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'));
+      }
     }
   } else {
     // Second click on the same flag
@@ -116,14 +132,23 @@ $('.event__match .event__logo').on('click', function(e) {
       // Even click count, turn both yellow
       homeParticipant.css('color', 'yellow');
       awayParticipant.css('color', 'yellow');
+      if (!isScheduled) {
+        starIcon.css('fill', (isHomeWinner && isAwayWinner) ? 'green' : 'red').css('stroke', (isHomeWinner && isAwayWinner) ? 'green' : 'red');
+      }
     } else {
       // Odd click count, toggle colors
       if (clickedLogo.hasClass('event__logo--home')) {
         homeParticipant.css('color', 'green');
         awayParticipant.css('color', 'red');
+        if (!isScheduled) {
+          starIcon.css('fill', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow')).css('stroke', isHomeWinner && !isAwayWinner ? 'green' : (isAwayWinner ? 'red' : 'yellow'));
+        }
       } else if (clickedLogo.hasClass('event__logo--away')) {
         homeParticipant.css('color', 'red');
         awayParticipant.css('color', 'green');
+        if (!isScheduled) {
+          starIcon.css('fill', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow')).css('stroke', isAwayWinner && !isHomeWinner ? 'green' : (isHomeWinner ? 'red' : 'yellow'));
+        }
       }
     }
   }
